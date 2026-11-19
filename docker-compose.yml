@@ -1,0 +1,18 @@
+# PostgreSQL local para probar antes de subir a la nube (igual que en la práctica de clase).
+# Al crear el contenedor por primera vez ejecuta en orden los archivos de ./sql
+services:
+  postgres:
+    image: postgres:18
+    container_name: itiid_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_local}
+      POSTGRES_DB: itiid
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d:ro
+      - datos:/var/lib/postgresql
+
+volumes:
+  datos:
